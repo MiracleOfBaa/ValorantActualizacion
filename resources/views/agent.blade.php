@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{{ asset('Fotos/descarga.jpeg') }}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $title ?? 'Agent Page' }}</title>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+</head>
+<body class="bg-center bg-cover font-sans relative bg-black">
+    <div class="flex items-center h-screen relative">
+        <!-- Imagen a la izquierda -->
+        <div class="absolute top-0 left-0 w-1/5 h-full bg-black">
+            <img
+                id="imagen"
+                alt="Imagen Izquierda"
+                class="w-full h-full object-contain"
+            />
+        </div>
+
+        <!-- Fondo con imagen y sombra -->
+        <img
+            id="wallpaper"
+            alt="Fondo de la página"
+            class="absolute top-0 right-0 w-4/5 h-full object-cover"
+        />
+
+        <div
+            class="absolute top-0 right-0 w-4/5 h-full bg-gray-800 bg-opacity-70 p-2 md:p-4 rounded-md text-white text-center"
+        >
+            <div class="mb-2 md:mb-4 mt-8">
+                <h1 id="nombre" class="md:text-8xl font-bold text-yellow-300"></h1>
+            </div>
+
+            <div class="mb-2 md:mb-8 mt-16">
+                <p id="descripcion"></p>
+            </div>
+
+            <!-- Cuatro tarjetas con información y video en 2 columnas verticales -->
+            <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 mt-24">
+                <!-- Tarjeta 1 -->
+                <div
+                    class="bg-black bg-opacity-75 aspect-w-16 gap-4 p-2 aspect-h-9 flex flex-col md:flex-row rounded-md items-center justify-center text-center"
+                >
+                    <p id="qBody" class="text-sm md:text-lg">
+                        <span id="qHeader" class="text-yellow-300 font-bold"></span>
+                        <br />
+                    </p>
+                    <iframe
+                        id="qVideo"
+                        class="md:w-[75%] md:h-[75%] w-full h-full rounded-md"
+                        frameborder="0"
+                        allowfullscreen
+                        autoplay
+                        loop
+                        muted
+                    ></iframe>
+                </div>
+
+                <!-- Tarjeta 2 -->
+                <div
+                    class="bg-black bg-opacity-75 aspect-w-16 gap-4 p-2 aspect-h-9 flex flex-col md:flex-row rounded-md items-center justify-center text-center"
+                >
+                    <p id="eBody" class="text-sm md:text-lg">
+                        <span id="eHeader" class="text-yellow-300 font-bold"></span>
+                        <br />
+                    </p>
+                    <iframe
+                        id="eVideo"
+                        class="md:w-[75%] md:h-[75%] w-full h-full rounded-md"
+                        frameborder="0"
+                        allowfullscreen
+                        autoplay
+                        loop
+                        muted
+                    ></iframe>
+                </div>
+
+                <!-- Tarjeta 3 -->
+                <div
+                    class="bg-black bg-opacity-75 aspect-w-16 gap-4 p-2 aspect-h-9 flex flex-col md:flex-row rounded-md items-center justify-center text-center"
+                >
+                    <p id="cBody" class="text-sm md:text-lg">
+                        <span id="cHeader" class="text-yellow-300 font-bold"></span>
+                        <br />
+                    </p>
+                    <iframe
+                        id="cVideo"
+                        class="md:w-[75%] md:h-[75%] w-full h-full rounded-md"
+                        frameborder="0"
+                        allowfullscreen
+                        autoplay
+                        loop
+                        muted
+                    ></iframe>
+                </div>
+
+                <!-- Tarjeta 4 -->
+                <div
+                    class="bg-black bg-opacity-75 aspect-w-16 gap-4 p-2 aspect-h-9 flex flex-col md:flex-row rounded-md items-center justify-center text-center"
+                >
+                    <p id="xBody" class="text-sm md:text-lg">
+                        <span id="xHeader" class="text-yellow-300 font-bold"></span>
+                        <br />
+                    </p>
+                    <iframe
+                        id="xVideo"
+                        class="md:w-[75%] md:h-[75%] w-full h-full rounded-md"
+                        frameborder="0"
+                        allowfullscreen
+                        autoplay
+                        loop
+                        muted
+                    ></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('src/utils.js') }}"></script>
+    <script src="{{ asset('src/components/Navbar.js') }}"></script>
+    <script src="{{ asset('src/pages/AgentPage.js') }}"></script>
+</body>
+</html>

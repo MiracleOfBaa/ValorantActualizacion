@@ -12,31 +12,32 @@ services:
     networks:
       - laravel
 
-  webserver:
-    image: nginx:latest
-    container_name: laravel_webserver
-    ports:
-      - 8080:80
-    volumes:
-      - .:/var/www/html
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d
-    depends_on:
-      - app
-    networks:
-      - laravel
-
   db:
     image: mysql:8.0
     container_name: laravel_db
     ports:
-      - 3306:3306
+      - 3307:3306  # Cambia el puerto 3306 si hay conflicto con otro servicio
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: valorant
-      MYSQL_USER: root
-      MYSQL_PASSWORD:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: valorant
     networks:
       - laravel
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 8081:80  # Puedes cambiar el puerto 8081 si hay conflicto
+    networks:
+      - laravel
+    depends_on:
+      - db
 
 networks:
   laravel:

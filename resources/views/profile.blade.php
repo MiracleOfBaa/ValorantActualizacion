@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil de Usuario - VALORANT</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="icon" href="{{ asset('Fotos/descarga.jpeg') }}" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ asset('src/styles.css') }}" />
+    <style>
+      .form {
+        clip-path: polygon(
+          20% 0%,
+          80% 0%,
+          100% 20%,
+          100% 80%,
+          80% 100%,
+          20% 100%,
+          0% 80%,
+          0% 20%
+        );
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .form-content {
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <style>
+    /* Estilos adicionales */
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .card {
+      border: 2px solid white;
+    }
+
+    .card h2 {
+      color: white;
+    }
+
+    input[type='text'],
+    input[type='email'],
+    textarea,
+    input[type='file'] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button[type='submit'] {
+      width: 100%;
+      padding: 8px;
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button[type='submit']:hover {
+      background-color: #0056b3;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+  </style>
+
+  <body class="bg-black">
+    <div class="container mx-auto mt-10 flex justify-center items-center">
+      <!-- Tarjeta para editar perfil -->
+      <div class="card p-6 rounded-lg border border-white">
+        <h2 class="text-xl font-bold mb-4">Editar Perfil</h2>
+        <form id="editProfileForm" class="mb-4">
+          <label for="username" class="block text-gray-200 mb-2">Nombre de Usuario:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="w-full px-3 py-2 mb-4 border rounded-md"
+            required
+          />
+
+          <label for="password" class="block text-gray-200 mb-2">Contraseña:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="w-full px-3 py-2 mb-4 border rounded-md"
+          />
+
+          <button
+            id="saveChanges"
+            type="button"
+            class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+          >
+            Guardar Cambios
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!--<hr class="mt-5" />
+    <h2 class="text-center text-gray-200 text-xl bold mt-4">
+      Tus Agentes Favoritos
+    </h2>
+    <div
+      id="agents"
+      class="container mx-auto my-8 flex flex-wrap justify-center gap-8"
+    ></div>-->
+
+    <script src="{{ asset('src/utils.js') }}"></script>
+    <script src="{{ asset('src/components/Navbar.js') }}"></script>
+    <script src="{{ asset('src/pages/ProfilePage.js') }}"></script>
+  </body>
+</html>
