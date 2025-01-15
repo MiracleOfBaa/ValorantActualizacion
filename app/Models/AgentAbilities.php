@@ -21,7 +21,6 @@ class AgentAbilities extends Model
      */
     public function agent()
     {
-        
         return $this->belongsTo(Agents::class, 'agent_id', 'id');
     }
 }

@@ -16,7 +16,7 @@ class Agents extends Model
         'wallpaper',
         'description'
     ];
-    
+
     /**
      * Relación con las habilidades del agente.
      */
@@ -34,6 +34,10 @@ class Agents extends Model
      */
     public static function getAgents()
     {
+        $agent = Agents::find('123e4567-e89b-12d3-a456-426614174000');
+        $abilities = $agent->abilities;
+        dd($abilities);  // Verifica si las habilidades están presentes
+
         // Recuperar 
         // Obtener todos los agentes con sus habilidades
         return self::with('abilities')->get();
