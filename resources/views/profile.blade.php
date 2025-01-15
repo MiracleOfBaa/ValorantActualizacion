@@ -137,7 +137,6 @@
     ></div>-->
 
     <script src="{{ asset('src/utils.js') }}"></script>
-    <script src="{{ asset('src/components/Navbar.js') }}"></script>
     <script src="{{ asset('src/pages/ProfilePage.js') }}"></script>
   </body>
 </html>

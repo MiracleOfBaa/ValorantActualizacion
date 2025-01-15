@@ -11,6 +11,7 @@
     />
 </head>
 <body class="bg-center bg-cover font-sans relative bg-black">
+    @include('partials.navbar')
     <div class="flex items-center h-screen relative">
         <!-- Imagen a la izquierda -->
         <div class="absolute top-0 left-0 w-1/5 h-full bg-black">
@@ -120,7 +121,6 @@
         </div>
     </div>
     <script src="{{ asset('src/utils.js') }}"></script>
-    <script src="{{ asset('src/components/Navbar.js') }}"></script>
     <script src="{{ asset('src/pages/AgentPage.js') }}"></script>
 </body>
 </html>

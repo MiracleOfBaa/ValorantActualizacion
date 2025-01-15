@@ -13,6 +13,7 @@
   <body
     class="font-sans relative bg-cover bg-center bg-no-repeat bg-allagents2"
   >
+  @include('partials.navbar')
     <div class="text-center pt-8 text-6xl font-mono">
       <p>ABOUT</p>
     </div>
@@ -318,6 +319,5 @@
       </div>
     </div>
     <script src="/src/utils.js"></script>
-    <script src="/src/components/Navbar.js"></script>
   </body>
 </html>

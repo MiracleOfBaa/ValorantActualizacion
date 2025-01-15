@@ -11,6 +11,7 @@
     <link rel="icon" href="{{ asset('Fotos/descarga.jpeg') }}" type="image/x-icon" />
   </head>
   <body class="relative font-sans bg-center bg-no-repeat bg-cover bg-allagents2">
+    @include('partials.navbar')
     <div class="pt-8 text-6xl font-semibold text-center">
       <p>ACTUALIZACIONES DEL JUEGO</p>
     </div>

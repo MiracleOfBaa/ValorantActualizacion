@@ -12,6 +12,7 @@
   </head>
 
   <body class="font-sans relative bg-black">
+    @include('partials.navbar')
     <!-- Contenido de la página -->
     <div class="flex flex-col md:flex-row justify-between items-start pt-10 md:p-10 space-y-8 md:space-y-0 md:space-x-8">
       <!-- Columna del medio -->
@@ -73,7 +74,6 @@
     </div>
 
     <script src="{{ asset('src/utils.js') }}"></script>
-    <script src="{{ asset('src/components/Navbar.js') }}"></script>
     <script src="{{ asset('src/pages/LoginPage.js') }}"></script>
   </body>
 </html>

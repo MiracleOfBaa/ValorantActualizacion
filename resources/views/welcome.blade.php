@@ -11,6 +11,7 @@
     <link rel="icon" href="{{ asset('Fotos/descarga.jpeg') }}" type="image/x-icon" />
   </head>
   <body class="bg-center bg-cover font-sans relative bg-black">
+    @include('partials.navbar')
     <video
       class="fixed top-0 left-0 min-w-full min-h-full w-full h-full object-cover z-0"
       autoplay
@@ -26,6 +27,5 @@
     <!-- Este div ocupa el espacio restante entre el contenido y el footer -->
 
     <script src="{{ asset('src/utils.js') }}"></script>
-    <script src="{{ asset('src/components/Navbar.js') }}"></script>
   </body>
 </html>

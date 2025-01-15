@@ -15,6 +15,7 @@
     <link rel="icon" href="{{ asset('Fotos/descarga.jpeg') }}" type="image/x-icon">
 </head>
 <body class="font-sans relative bg-black bg-cover Fotos">
+    @include('partials.navbar')
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl text-center mb-6 text-gray-200">Create Agent</h1>
         <form id="createForm" class="max-w-lg mx-auto" method="POST" enctype="multipart/form-data">
@@ -116,7 +117,6 @@
         </form>
     </div>
     <script src="{{ asset('src/utils.js') }}"></script>
-    <script src="{{ asset('src/components/Navbar.js') }}"></script>
     <script src="{{ asset('src/pages/AgentEdit.js') }}"></script>
 </body>
 </html>

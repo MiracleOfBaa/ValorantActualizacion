@@ -30,6 +30,7 @@
     </style>
   </head>
   <body class="font-sans relative bg-black bg-cover Fotos">
+    @include('partials.navbar')
     <div id="filters" class="flex justify-center items-center space-x-4 mb-6 mt-6">
       <!-- Search bar -->
       <input
@@ -69,7 +70,6 @@
     </div>
 
     <script src="{{ asset('src/utils.js') }}"></script>
-    <script src="{{ asset('src/components/Navbar.js') }}"></script>
     <script src="{{ asset('src/pages/AgentsPage.js') }}"></script>
   </body>
 </html>

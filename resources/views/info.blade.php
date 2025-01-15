@@ -87,6 +87,7 @@
     </style>
   </head>
   <body>
+    @include('partials.navbar')
     <div class="container mx-auto">
       <section id="recursos">
         <h2 class="text-center">Webgrafía</h2>
