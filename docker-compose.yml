@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: php:8.1-fpm
+    image: php:8.2-fpm
     container_name: laravel_app
     working_dir: /var/www/html
     volumes:
@@ -11,6 +11,9 @@ services:
       - 8000:8000
     networks:
       - laravel
+    build:
+      context: .
+      dockerfile: Dockerfile
 
   db:
     image: mysql:8.0
