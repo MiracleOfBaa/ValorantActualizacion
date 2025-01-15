@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Agents;
 
 class AgentAbilities extends Model
 {
@@ -22,5 +23,10 @@ class AgentAbilities extends Model
     public function agent()
     {
         return $this->belongsTo(Agents::class, 'agent_id', 'id');
+    }
+
+    public static function getAbilities($agent_id)
+    {
+        return self::where('agent_id', $agent_id)->get();
     }
 }

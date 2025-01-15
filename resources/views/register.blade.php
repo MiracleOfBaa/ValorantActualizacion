@@ -14,41 +14,61 @@
   <body class="font-sans relative bg-black">
     @include('partials.navbar')
     <!-- Contenido de la página -->
-    <div
-      class="flex flex-col md:flex-row justify-between items-start pt-10 md:p-10 space-y-8 md:space-y-0 md:space-x-8"
-    >
+    <div class="flex flex-col md:flex-row justify-between items-start pt-10 md:p-10 space-y-8 md:space-y-0 md:space-x-8">
       <!-- Columna del medio -->
       <div class="w-full md:w-2/5 pt-16">
         <h2 class="text-5xl text-white mb-8 text-center md:text-left">
           REGISTRATE
         </h2>
         <!-- Formulario en una tarjeta -->
-        <div class="pt-8 rounded shadow-lg mb-10 md:mb-8 flex flex-col">
-          <input
-            id="username"
-            type="text"
-            placeholder="Nombre de usuario"
-            class="p-3 mb-5 w-full rounded-md border-2 border-white focus:border-blue-500 focus:outline-none"
-          />
-          <input
-            id="password"
-            type="password"
-            placeholder="Contraseña"
-            class="p-3 mb-5 w-full rounded-md border-2 border-white focus:border-blue-500 focus:outline-none"
-          />
-          <button
-            id="register"
-            type="submit"
-            class="bg-black text-white p-3 mt-5 w-full font-bold rounded-md bg-blue-500 m-auto hover:bg-blue-300 transition"
-          >
-            Registrar Usuario
-          </button>
-        </div>
+        <form action="{{ route('register') }}" method="POST">
+          @csrf
+          <div class="pt-8 rounded shadow-lg mb-10 md:mb-8 flex flex-col">
+            <input
+              id="username"
+              type="text"
+              name="username"
+              placeholder="Nombre de usuario"
+              value="{{ old('username') }}"
+              class="p-3 mb-5 w-full rounded-md border-2 border-white focus:border-blue-500 focus:outline-none"
+            />
+            @error('username')
+              <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
+
+            <input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Contraseña"
+              class="p-3 mb-5 w-full rounded-md border-2 border-white focus:border-blue-500 focus:outline-none"
+            />
+            @error('password')
+              <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
+
+            <input
+              id="password_confirmation"
+              type="password"
+              name="password_confirmation"
+              placeholder="Confirmar Contraseña"
+              class="p-3 mb-5 w-full rounded-md border-2 border-white focus:border-blue-500 focus:outline-none"
+            />
+            @error('password_confirmation')
+              <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
+
+            <button
+              type="submit"
+              class="bg-black text-white p-3 mt-5 w-full font-bold rounded-md bg-blue-500 m-auto hover:bg-blue-300 transition"
+            >
+              Registrar Usuario
+            </button>
+          </div>
+        </form>
 
         <!-- Tres Imágenes en tarjetas cuadradas (debajo del formulario y ordenadas horizontalmente) -->
-        <div
-          class="flex flex-col md:flex-row w-full space-y-5 md:space-x-5 pt-6"
-        >
+        <div class="flex flex-col md:flex-row w-full space-y-5 md:space-x-5 pt-6">
           <img
             src="{{ asset('Fotos/fotosContacto/tarjeta3.jpeg') }}"
             alt="Imagen 2"
@@ -76,8 +96,5 @@
         />
       </div>
     </div>
-
-    <script src="{{ asset('src/utils.js') }}"></script>
-    <script src="{{ asset('src/pages/RegisterPage.js') }}"></script>
   </body>
 </html>

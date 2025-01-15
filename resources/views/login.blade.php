@@ -21,27 +21,37 @@
           INICIAR SESIÓN
         </h2>
         <!-- Formulario en una tarjeta -->
-        <div class="pt-8 rounded shadow-lg mb-10 md:mb-8 flex flex-col">
+        <form action="{{ route('login') }}" method="POST" class="pt-8 rounded shadow-lg mb-10 md:mb-8 flex flex-col">
+          @csrf
           <input
             id="username"
+            name="username"
             type="text"
             placeholder="Nombre de usuario"
             class="p-3 mb-5 w-full rounded-md border-2 border-white focus:border-blue-500 focus:outline-none"
           />
+          @error('username')
+          <div class="text-red-500">{{ $message }}</div>
+          @enderror
+          
           <input
             id="password"
+            name="password"
             type="password"
             placeholder="Contraseña"
             class="p-3 mb-5 w-full rounded-md border-2 border-white focus:border-blue-500 focus:outline-none"
           />
+          @error('password')
+          <div class="text-red-500">{{ $message }}</div>
+          @enderror
+          
           <button
-            id="login"
             type="submit"
             class="bg-black text-white p-3 mt-5 w-full font-bold rounded-md bg-blue-500 m-auto hover:bg-blue-300 transition"
           >
             Iniciar Sesión
           </button>
-        </div>
+        </form>
 
         <!-- Tres Imágenes en tarjetas cuadradas (debajo del formulario y ordenadas horizontalmente) -->
         <div class="flex flex-col md:flex-row w-full space-y-5 md:space-x-5 pt-6">
@@ -74,6 +84,6 @@
     </div>
 
     <script src="{{ asset('src/utils.js') }}"></script>
-    <script src="{{ asset('src/pages/LoginPage.js') }}"></script>
+    <!-- Ya no necesitas el script del login JS porque usaremos un formulario tradicional con Laravel -->
   </body>
 </html>

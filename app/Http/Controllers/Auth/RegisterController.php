@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -17,25 +16,24 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        // Validación de datos
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+        // Validación de los datos del formulario
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|min:5|unique:users,username',
+            'password' => 'required|string|min:8|confirmed', // Confirmación de contraseña
         ]);
 
-        // Crear el usuario
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        // Crear un nuevo usuario
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password), // Encriptar la contraseña
-            'role' => 'user' // Establecer el rol por defecto (puedes hacer esto dinámico si es necesario)
+            'username' => $request->username,
+            'password_hash' => $request->password, // Aquí el setter se encarga de hacer el hash
+            'role' => 'user', // Este valor lo puedes modificar dependiendo de los roles
         ]);
 
-        // Iniciar sesión después de registrar al usuario
-        Auth::login($user);
-
-        // Redirigir al usuario después del registro
-        return redirect('/');
+        // Redirigir al login o a otra página después de la creación
+        return redirect()->route('login')->with('success', 'Usuario registrado exitosamente.');
     }
 }

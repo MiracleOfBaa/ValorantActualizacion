@@ -12,9 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('agents', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string('type');
+            $table->string('name');
+            $table->string('photo');
+            $table->string('wallpaper');
+            $table->text('description');
             $table->timestamps();
         });
+        
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agents;
+use App\Models\Comment;
+use App\Models\CommentLike;
 use Illuminate\Http\JsonResponse;
 
 class AgentController extends Controller
@@ -16,7 +18,7 @@ class AgentController extends Controller
     {
         // Llama a la función para obtener los datos
         $agents = Agents::getAgents();
-
+        
         // Retorna los datos como JSON
         return response()->json($agents);
     }

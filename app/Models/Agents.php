@@ -3,20 +3,35 @@
 namespace App\Models;
 
 use App\Models\AgentAbilities;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Agents extends Model
 {
-    protected $table = 'agents'; // Nombre de la tabla
+    protected $keyType = 'string';  
+    public $incrementing = false; 
+    
     protected $fillable = [
         'id',
         'type',
         'name',
         'photo',
         'wallpaper',
-        'description'
+        'description',
     ];
 
+    // Aquí puedes agregar un método para generar UUIDs cuando se cree un nuevo modelo
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (!$model->id) {
+                $model->id = (string) Str::uuid();
+            }
+        });
+    }
     /**
      * Relación con las habilidades del agente.
      */
@@ -24,22 +39,22 @@ class Agents extends Model
     {
         return $this->hasMany(AgentAbilities::class, 'agent_id', 'id');
     }
-    
-    
 
-    /**
-     * Recuperar todos los agentes con sus habilidades.
-     *
-     * @return array
-     */
+    public static function getTypeAgents($type)
+    {
+        $agents = self::with('abilities')->where('type', $type)->get();
+        return $agents;
+    }
+
+    public static function getOrderByLikes()
+    {
+        $agents = self::with('abilities')->orderBy('likes', 'desc')->get();
+        return $agents;
+    }
+
     public static function getAgents()
     {
-        $agent = Agents::find('123e4567-e89b-12d3-a456-426614174000');
-        $abilities = $agent->abilities;
-        dd($abilities);  // Verifica si las habilidades están presentes
-
-        // Recuperar 
-        // Obtener todos los agentes con sus habilidades
-        return self::with('abilities')->get();
+        $agents = self::with('abilities')->get();
+        return $agents;
     }
 }
