@@ -4,139 +4,89 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Perfil de Usuario - VALORANT</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-    <link rel="icon" href="{{ asset('Fotos/descarga.jpeg') }}" type="image/x-icon" />
-    <link rel="stylesheet" href="{{ asset('src/styles.css') }}" />
-    <style>
-      .form {
-        clip-path: polygon(
-          20% 0%,
-          80% 0%,
-          100% 20%,
-          100% 80%,
-          80% 100%,
-          20% 100%,
-          0% 80%,
-          0% 20%
-        );
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .form-content {
-        text-align: center;
-      }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   </head>
 
-  <style>
-    /* Estilos adicionales */
-    body {
-      font-family: Arial, sans-serif;
-    }
+  <body class="bg-black min-h-screen">
+    @include('partials.navbar')
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+    <!-- Contenido Principal -->
+    <div class="container mx-auto mt-12 flex justify-center items-center px-4">
+      <!-- Tarjeta para mostrar y editar perfil -->
+      <div class="card p-8 rounded-lg w-full max-w-lg border border-gray-700">
+        <h2 class="text-2xl font-bold text-gray-100 mb-6 text-center">
+          Editar Perfil
+        </h2>
 
-    .card {
-      border: 2px solid white;
-    }
+        <!-- Mostrar los datos actuales del usuario -->
+        <div class="mb-6 text-center">
+          <p class="text-gray-300">Nombre de Usuario: <span class="font-semibold">{{ auth()->user()->username }}</span></p>
+        </div>
 
-    .card h2 {
-      color: white;
-    }
+        <!-- Si hay un mensaje de éxito, lo mostramos -->
+        @if(session('success'))
+          <div class="mb-4 text-green-500 text-center">
+            {{ session('success') }}
+          </div>
+        @endif
 
-    input[type='text'],
-    input[type='email'],
-    textarea,
-    input[type='file'] {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+        <!-- Formulario para editar el perfil -->
+        <form action="{{ route('profile.update') }}" method="POST" class="space-y-5">
+          @csrf
 
-    button[type='submit'] {
-      width: 100%;
-      padding: 8px;
-      background-color: #007bff;
-      color: #ffffff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+          <!-- Nombre de Usuario -->
+          <div>
+            <label for="username" class="block text-gray-300 text-sm mb-2">Nombre de Usuario:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value="{{ auth()->user()->username }}" <!-- Mostrar el nombre de usuario actual -->
+              class="w-full px-4 py-2 bg-gray-800 text-gray-300 rounded-md border border-gray-600 focus:ring-2 focus:ring-blue-500"
+              placeholder="Ingresa tu nombre de usuario"
+              required
+            />
+            @error('username')
+              <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
+          </div>
 
-    button[type='submit']:hover {
-      background-color: #0056b3;
-    }
+          <!-- Contraseña -->
+          <div>
+            <label for="password" class="block text-gray-300 text-sm mb-2">Contraseña:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="w-full px-4 py-2 bg-gray-800 text-gray-300 rounded-md border border-gray-600 focus:ring-2 focus:ring-blue-500"
+              placeholder="Deja en blanco para no cambiar"
+            />
+            @error('password')
+              <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
+          </div>
 
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
+          <!-- Confirmar Contraseña -->
+          <div>
+            <label for="password_confirmation" class="block text-gray-300 text-sm mb-2">Confirmar Contraseña:</label>
+            <input
+              type="password"
+              id="password_confirmation"
+              name="password_confirmation"
+              class="w-full px-4 py-2 bg-gray-800 text-gray-300 rounded-md border border-gray-600 focus:ring-2 focus:ring-blue-500"
+              placeholder="Confirma tu nueva contraseña"
+            />
+          </div>
 
-    li {
-      margin-bottom: 5px;
-    }
-  </style>
-
-  <body class="bg-black">
-    <div class="container mx-auto mt-10 flex justify-center items-center">
-      <!-- Tarjeta para editar perfil -->
-      <div class="card p-6 rounded-lg border border-white">
-        <h2 class="text-xl font-bold mb-4">Editar Perfil</h2>
-        <form id="editProfileForm" class="mb-4">
-          <label for="username" class="block text-gray-200 mb-2">Nombre de Usuario:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            class="w-full px-3 py-2 mb-4 border rounded-md"
-            required
-          />
-
-          <label for="password" class="block text-gray-200 mb-2">Contraseña:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="w-full px-3 py-2 mb-4 border rounded-md"
-          />
-
+          <!-- Botón Guardar Cambios -->
           <button
-            id="saveChanges"
-            type="button"
-            class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+            type="submit"
+            class="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             Guardar Cambios
           </button>
         </form>
       </div>
     </div>
-
-    <!--<hr class="mt-5" />
-    <h2 class="text-center text-gray-200 text-xl bold mt-4">
-      Tus Agentes Favoritos
-    </h2>
-    <div
-      id="agents"
-      class="container mx-auto my-8 flex flex-wrap justify-center gap-8"
-    ></div>-->
-
-    <script src="{{ asset('src/utils.js') }}"></script>
-    <script src="{{ asset('src/pages/ProfilePage.js') }}"></script>
   </body>
 </html>

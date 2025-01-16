@@ -33,7 +33,7 @@
           @error('username')
           <div class="text-red-500">{{ $message }}</div>
           @enderror
-          
+
           <input
             id="password"
             name="password"
@@ -44,7 +44,7 @@
           @error('password')
           <div class="text-red-500">{{ $message }}</div>
           @enderror
-          
+
           <button
             type="submit"
             class="bg-black text-white p-3 mt-5 w-full font-bold rounded-md bg-blue-500 m-auto hover:bg-blue-300 transition"

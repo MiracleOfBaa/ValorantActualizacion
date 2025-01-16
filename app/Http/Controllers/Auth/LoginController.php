@@ -20,7 +20,7 @@ class LoginController extends Controller
     {
         // Validar las credenciales
         $credentials = $request->validate([
-            'username' => 'required|string',  // Cambiamos 'email' por 'username'
+            'username' => 'required|string',
             'password' => 'required|string',
         ]);
 
@@ -29,10 +29,16 @@ class LoginController extends Controller
 
         // Verificar si el usuario existe y si la contraseña es correcta
         if ($user && Hash::check($credentials['password'], $user->password)) {
-            // Iniciar sesión
-            Auth::login($user, $request->remember);
+            Auth::login($user);
             $request->session()->regenerate();
-            return redirect()->intended('/'); // Redirige al home o dashboard
+
+            // Prueba si el usuario está autenticado
+            if (Auth::check()) {
+                print(Auth::user());
+                return redirect()->intended('/')->with('success', '¡Inicio de sesión exitoso!');
+            } else {
+                return redirect()->back()->with('error', 'Algo salió mal al autenticar.');
+            }
         }
 
         // Si las credenciales son incorrectas, muestra un mensaje de error

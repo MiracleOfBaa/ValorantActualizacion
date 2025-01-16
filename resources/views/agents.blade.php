@@ -1,8 +1,3 @@
-<?php
-use App\Models\Agents;
-$agents = Agents::getAgents();
-
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -32,44 +27,74 @@ $agents = Agents::getAgents();
       .form-content {
         text-align: center;
       }
+
+      .agent-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .agent-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .agent-img {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;  /* Asegura que la imagen se vea completa */
+        object-position: center; /* Centra la imagen dentro del contenedor */
+      }
     </style>
   </head>
   <body class="relative font-sans bg-black bg-cover Fotos">
     @include('partials.navbar')
-    <div id="filters" class="flex items-center justify-center mt-6 mb-6 space-x-4">
-      <!-- Search bar -->
+
+    <form method="GET" action="{{ route('agents.index') }}" class="flex items-center justify-center mt-6 mb-6 space-x-4">
       <input
         type="text"
+        name="search"
         placeholder="Search by agent name"
         class="px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        id="searchAgent"
+        value="{{ request('search') }}"  <!-- Retener el valor de búsqueda -->
       />
 
-      <!-- Select dropdown -->
       <select
-        id="filterBy"
+        name="filterBy"
         class="px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
-        <option selected value="">All Agents</option>
-        <option value="liked">Liked Agents</option>
-        <option value="centinela">Type: Centinela</option>
-        <option value="controlador">Type: Controlador</option>
-        <option value="duelista">Type: Duelista</option>
-        <option value="iniciador">Type: Iniciador</option>
+        <option value="">All Agents</option>
+        <option value="liked" {{ request('filterBy') == 'liked' ? 'selected' : '' }}>Liked Agents</option>
+        <option value="centinela" {{ request('filterBy') == 'centinela' ? 'selected' : '' }}>Type: Centinela</option>
+        <option value="controlador" {{ request('filterBy') == 'controlador' ? 'selected' : '' }}>Type: Controlador</option>
+        <option value="duelista" {{ request('filterBy') == 'duelista' ? 'selected' : '' }}>Type: Duelista</option>
+        <option value="iniciador" {{ request('filterBy') == 'iniciador' ? 'selected' : '' }}>Type: Iniciador</option>
       </select>
-    </div>
+
+      <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded-md">Filter</button>
+    </form>
 
     <div id="agents" class="container flex flex-wrap justify-center gap-8 mx-auto my-8">
       <!-- Aquí se mostrarán los agentes -->
       @foreach($agents as $agent)
         <div class="w-64 p-4 text-white bg-gray-800 rounded-lg agent-card">
-          <img src="{{ asset('storage/' . $agent->photo) }}" alt="{{ $agent->name }}" class="object-cover w-full h-32 mb-4 rounded-lg">
-          <h3 class="mb-2 text-xl">{{ $agent->name }}</h3>
-          <p class="text-sm">{{ Str::limit($agent->description, 100) }}</p>
-          <div class="flex items-center justify-between mt-4">
-            <a href="{{ route('agents.show', $agent->id) }}" class="text-blue-500 hover:underline">View Details</a>
-            <a href="{{ route('agents.edit', $agent->id) }}" class="text-yellow-500 hover:underline">Edit</a>
-          </div>
+          <a href="{{ route('agents.show', $agent->id) }}" class="block">
+            <img src="{{ asset('Fotos/' . $agent->photo) }}" alt="{{ $agent->name }}" class="agent-img mb-4 rounded-lg">
+            <h3 class="mb-2 text-xl">{{ $agent->name }}</h3>
+          </a>
+
+          <!-- Botones Editar y Eliminar solo si el usuario es admin -->
+          @if(auth()->user() && auth()->user()->role == 'admin')
+            <div class="mt-4 flex justify-between gap-4">
+              <!-- Botón de Editar -->
+              <a href="{{ route('agents.edit', $agent->id) }}" class="px-4 py-2 bg-yellow-500 text-white rounded-md text-center hover:bg-yellow-600">Edit</a>
+
+              <!-- Botón de Eliminar -->
+              <form action="{{ route('agents.destroy', $agent->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this agent?')" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md text-center hover:bg-red-600">Delete</button>
+              </form>
+            </div>
+          @endif
         </div>
       @endforeach
     </div>

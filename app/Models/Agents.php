@@ -9,9 +9,9 @@ use Illuminate\Support\Str;
 
 class Agents extends Model
 {
-    protected $keyType = 'string';  
-    public $incrementing = false; 
-    
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     protected $fillable = [
         'id',
         'type',
@@ -38,6 +38,11 @@ class Agents extends Model
     public function abilities()
     {
         return $this->hasMany(AgentAbilities::class, 'agent_id', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'agent_id', 'id');
     }
 
     public static function getTypeAgents($type)

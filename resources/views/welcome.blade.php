@@ -10,10 +10,10 @@
     />
     <link rel="icon" href="{{ asset('Fotos/descarga.jpeg') }}" type="image/x-icon" />
   </head>
-  <body class="bg-center bg-cover font-sans relative bg-black">
+  <body class="relative font-sans bg-black bg-center bg-cover">
     @include('partials.navbar')
     <video
-      class="fixed top-0 left-0 min-w-full min-h-full w-full h-full object-cover z-0"
+      class="fixed top-0 left-0 z-0 object-cover w-full h-full min-w-full min-h-full"
       autoplay
       loop
       muted
@@ -26,6 +26,6 @@
     <div class="flex-grow"></div>
     <!-- Este div ocupa el espacio restante entre el contenido y el footer -->
 
-    <script src="{{ asset('src/utils.js') }}"></script>
+    <!-- <script src="{{ asset('src/utils.js') }}"></script> -->
   </body>
 </html>

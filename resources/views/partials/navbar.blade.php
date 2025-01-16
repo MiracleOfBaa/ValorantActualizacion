@@ -1,31 +1,42 @@
-<nav class="bg-black bg-cover p-5 text-center relative z-10">
-    <!-- Enlaces de navegación comunes -->
-    <a href="{{ url('/about') }}" class="text-white mx-4 my-2 text-lg hover:text-gray-300 hover:bg-gray-700 transition rounded-full py-2 px-4">About</a>
-    <a href="{{ url('/') }}" class="text-white mx-4 my-2 text-lg hover:text-gray-300 hover:bg-gray-700 transition rounded-full py-2 px-4">Home</a>
-    <a href="{{ url('/agents') }}" class="text-white mx-4 my-2 text-lg hover:text-gray-300 hover:bg-gray-700 transition rounded-full py-2 px-4">Agents</a>
-    <a href="{{ url('/contact') }}" class="text-white mx-4 my-2 text-lg hover:text-gray-300 hover:bg-gray-700 transition rounded-full py-2 px-4">Contact</a>
-    <a href="{{ url('/news') }}" class="text-white mx-4 my-2 text-lg hover:text-gray-300 hover:bg-gray-700 transition rounded-full py-2 px-4">News</a>
-    <a href="{{ url('/info') }}" class="text-white mx-4 my-2 text-lg hover:text-gray-300 hover:bg-gray-700 transition rounded-full py-2 px-4">Info</a>
+<!-- resources/views/layouts/app.blade.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="relative z-10 p-5 text-center bg-black bg-cover">
+        <a href="{{ url('/about') }}" class="mx-4 text-white">About</a>
+        <a href="{{ url('/') }}" class="mx-4 text-white">Home</a>
+        <a href="{{ url('/contact') }}" class="mx-4 text-white">Contact</a>
+        <a href="{{ url('/agents') }}" class="mx-4 text-white">Agents</a>
+        <a href="{{ url('/info') }}" class="mx-4 text-white">Info</a>
+        <a href="{{ url('/news') }}" class="mx-4 text-white">News</a>
 
-    <!-- Verifica si el usuario está autenticado o no -->
-    @guest
-        <!-- Opciones para usuarios no autenticados -->
-        <a href="{{ route('login') }}" class="text-white mx-4 my-2 text-lg hover:text-gray-300 hover:bg-gray-700 transition rounded-full py-2 px-4">Login</a>
-        <a href="{{ route('register') }}" class="text-white mx-4 my-2 text-lg hover:text-gray-300 hover:bg-gray-700 transition rounded-full py-2 px-4">Register</a>
-    @else
-        <!-- Opciones para usuarios autenticados -->
-        @if(auth()->user()->role === 'admin')
-            <a href="{{ url('/result') }}" class="text-white mx-4 my-2 text-lg hover:text-gray-300 hover:bg-gray-700 transition rounded-full py-2 px-4">Result</a>
+
+        @if (auth()->check())
+            <!-- Mostrar estas opciones si estás logueado -->
+            <a href="{{ url('/profile') }}" class="mx-4 text-white">Profile</a>
+            <a href="{{ route('logout') }}" class="mx-4 text-white"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+               Logout
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        @else
+            <!-- Mostrar estas opciones si NO estás logueado -->
+            <a href="{{ route('login') }}" class="mx-4 text-white">Login</a>
+            <a href="{{ route('register') }}" class="mx-4 text-white">Register</a>
         @endif
-        <a href="{{ url('/profile') }}" class="text-white mx-4 my-2 text-lg hover:text-gray-300 hover:bg-gray-700 transition rounded-full py-2 px-4">Profile</a>
-        <!-- Botón para logout -->
-        <a href="{{ route('logout') }}" 
-           onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-           class="text-white mx-4 my-2 text-lg hover:text-gray-300 hover:bg-gray-700 transition rounded-full py-2 px-4">
-           Logout
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-            @csrf
-        </form>
-    @endguest
-</nav>
+    </nav>
+
+    <!-- Contenido dinámico -->
+    <div class="container p-5 mx-auto">
+        @yield('content')
+    </div>
+</body>
+</html>

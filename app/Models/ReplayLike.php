@@ -4,19 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CommentLike extends Model
+class ReplyLike extends Model
 {
     protected $fillable = [
         'user_id',
-        'comment_id',
+        'reply_id',
     ];
 
     /**
-     * Relación con el comentario (un like pertenece a un comentario).
+     * Relación con la respuesta (un like pertenece a una respuesta).
      */
-    public function comment()
+    public function reply()
     {
-        return $this->belongsTo(Comment::class, 'comment_id', 'id');
+        return $this->belongsTo(Reply::class, 'reply_id', 'id');
     }
 
     /**

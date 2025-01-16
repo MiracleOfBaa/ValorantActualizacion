@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model implements Authenticatable
 {
-    protected $table = 'user';  // Nombre de la tabla
+    protected $table = 'users';  // Nombre de la tabla
 
     protected $fillable = [
-        'id',
         'role',
         'username',
         'password',
+        'updated_at',
         'created_at',
+        'remember_token',
     ];
 
     // Para evitar que se muestre el campo 'password' en respuestas JSON

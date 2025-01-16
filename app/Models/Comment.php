@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Agents;
 class Comment extends Model
 {
     protected $table = 'comments';  // Nombre de la tabla
@@ -31,36 +31,19 @@ class Comment extends Model
     }
 
     /**
-     * Obtener todos los comentarios de un agente específico.
-     *
-     * @param string $agentId
-     * @return \Illuminate\Database\Eloquent\Collection
+     * Obtener todas las respuestas de un comentario.
      */
-    public static function getCommentsForAgent($agentId)
+    public function replies()
     {
-        return self::where('agent_id', $agentId)->get();
+        return $this->hasMany(Reply::class, 'comment_id', 'id');
     }
 
     /**
-     * Obtener todos los comentarios hechos por un usuario específico.
-     *
-     * @param string $userId
-     * @return \Illuminate\Database\Eloquent\Collection
+     * Obtener todos los likes del comentario.
      */
-    public static function getCommentsByUser($userId)
+    public function likes()
     {
-        return self::where('user_id', $userId)->get();
-    }
-
-    /**
-     * Obtener un comentario específico por su ID.
-     *
-     * @param int $commentId
-     * @return Comment|null
-     */
-    public static function getCommentById($commentId)
-    {
-        return self::find($commentId);
+        return $this->hasMany(CommentLike::class, 'comment_id', 'id');
     }
 
     /**
@@ -71,6 +54,7 @@ class Comment extends Model
      */
     public static function createComment(array $data)
     {
+        $data['user_id'] = auth()->id();
         return self::create($data);
     }
 }

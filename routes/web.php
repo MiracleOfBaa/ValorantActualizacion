@@ -3,75 +3,56 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AgentController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController; // Asegúrate de importar el ProfileController
+use App\Http\Controllers\CommentController;
 
-
+// Rutas públicas
 Route::get('/', function () {
-  return view('welcome');
-});
+    return view('welcome');
+})->name('home');
+
 
 Route::get('/about', function () {
     return view('about');
 });
 
-Route::get('/agent', function () {
-    return view('agent');
+Route::get('/info', function () {
+    return view('info');
 });
 
-Route::get('/agentedit', function () {
-    return view('agentedit');
-});
+Route::get('agents', [AgentController::class, 'index'])->name('agents.index');
+Route::get('agents/{id}', [AgentController::class, 'show'])->name('agents.show');
+Route::get('agents/{id}/edit', [AgentController::class, 'edit'])->name('agents.edit');
+
+Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/agentform', function () {
     return view('agentform');
 });
 
-Route::get('/agents', function () {
-    return view('agents');
+// Rutas protegidas
+Route::middleware(['auth'])->group(function () {
+    // Route::get('/profile', function () {
+    //     return view('profile');
+    // });
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
-Route::get('agents/{id}', [AgentController::class, 'show'])->name('agents.show');
-Route::get('agents/{id}/edit', [AgentController::class, 'edit'])->name('agents.edit');
+// Rutas de autenticación
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 
-Route::get('/info', function () {
-    return view('info');
-});
-
-Route::get('/login', function () {
-    return view('login');
-});
-
-Route::get('/news', function () {
-    return view('news');
-});
-
-Route::get('/profile', function () {
-    return view('profile');
-});
-
-Route::get('/register', function () {
-    return view('register');
-});
-
-Route::get('/result', function () {
-    return view('result');
-});
-
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-
+// Register
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-// Tests
-use App\Http\Controllers\AgentController;
+// Rutas para los comentarios
+Route::post('/agents/{agent}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
+Route::post('/comments/{comment}/reply', [CommentController::class, 'reply'])->name('comments.reply');
 
-Route::get('/agents_test', [AgentController::class, 'index']);
-
-// routes/web.php
-
-use App\Http\Controllers\ContactController;
-
-Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
