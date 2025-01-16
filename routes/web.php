@@ -34,7 +34,7 @@ Route::get('/agentform', function () {
 });
 
 // Rutas protegidas
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['web'])->group(function () {
     // Route::get('/profile', function () {
     //     return view('profile');
     // });
@@ -56,3 +56,6 @@ Route::post('/agents/{agent}/comments', [CommentController::class, 'store'])->na
 Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
 Route::post('/comments/{comment}/reply', [CommentController::class, 'reply'])->name('comments.reply');
 
+
+// Ruta para dar/quitado like
+Route::post('/agents/{id}/like', [AgentController::class, 'like'])->name('agents.like');

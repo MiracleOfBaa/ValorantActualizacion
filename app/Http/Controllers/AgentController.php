@@ -25,23 +25,47 @@ class AgentController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        // Filtrar por tipo si se ha seleccionado un tipo específico
+       // Filtrar por tipo si se ha seleccionado un tipo específico
         if ($request->has('filterBy') && $request->filterBy != '') {
-            if ($request->filterBy == 'liked') {
-
-                $query->whereHas('likes');  // Verifica que la relación "likes" esté configurada en el modelo Agent
-            } else {
-                // Filtrar por tipo (centinela, controlador, etc.)
-                $query->where('type', $request->filterBy);
-            }
+        if ($request->filterBy == 'liked') {
+            // Filtrar solo los agentes que el usuario autenticado ha dado "like"
+            $query->whereHas('likes', function ($query) {
+                $query->where('user_id', auth()->id()); // Filtrar por el ID del usuario autenticado
+            })
+            ->withCount('likes') // Contar los "likes"
+            ->orderByDesc('likes_count'); // Ordenar por cantidad de "likes" de forma descendente
+        } else {
+            // Filtrar por tipo (centinela, controlador, etc.)
+            $query->where('type', $request->filterBy);
         }
-
+    }
         // Obtener los agentes filtrados
         $agents = $query->get();
 
         // Pasar los agentes a la vista
         return view('agents', compact('agents'));
     }
+
+    public function like($id)
+    {
+        $user = auth()->user();
+        $agent = Agents::findOrFail($id);
+
+        // Verificar si el usuario ya ha dado like
+        $existingLike = $user->likes()->where('agent_id', $agent->id)->first();
+
+        if ($existingLike) {
+            // Si ya le dio like, quitar el like
+            $user->likes()->detach($agent->id);
+        } else {
+            // Si no le ha dado like, agregar el like
+            $user->likes()->attach($agent->id);
+        }
+
+        // Redirigir de vuelta a la página anterior
+        return back();
+    }
+
 
     public function show($id)
     {

@@ -49,9 +49,29 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/');
+        // Verifica si el usuario está logueado antes de hacer logout
+        if (Auth::check()) {
+            // Cerrar sesión
+            Auth::logout();
+
+            // Invalidar la sesión
+            $request->session()->invalidate();
+
+            // Regenerar token CSRF
+            $request->session()->regenerateToken();
+
+            // Eliminar la sesión de la base de datos manualmente
+            $sessionId = $request->session()->id();
+            \DB::table('sessions')->where('user_id', $sessionId)->delete(); // Elimina la sesión en la base de datos
+
+            // Eliminar datos de la sesión
+            $request->session()->flush();
+
+            // Redirigir a la página de inicio
+            return redirect('/');
+        } else {
+            return redirect('/')->with('error', 'No hay sesión activa.');
+        }
     }
+
 }

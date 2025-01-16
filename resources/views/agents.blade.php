@@ -30,6 +30,8 @@
 
       .agent-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        width: 240px; /* Ajuste del tamaño del agente */
+        margin-bottom: 20px;
       }
 
       .agent-card:hover {
@@ -39,9 +41,20 @@
 
       .agent-img {
         width: 100%;
-        height: 200px;
+        height: 150px; /* Ajustar altura */
         object-fit: contain;  /* Asegura que la imagen se vea completa */
         object-position: center; /* Centra la imagen dentro del contenedor */
+      }
+
+      .heart {
+        color: #e25555;
+        cursor: pointer;
+        font-size: 24px;
+        transition: color 0.2s ease;
+      }
+
+      .liked {
+        color: #ff4d4d;
       }
     </style>
   </head>
@@ -72,14 +85,33 @@
       <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded-md">Filter</button>
     </form>
 
+    <!-- Botón Añadir Agente (solo visible para admin) -->
+    @if(auth()->user() && auth()->user()->role == 'admin')
+      <div class="flex justify-center mb-6">
+        <a href="{{ route('agents.create') }}" class="px-4 py-2 bg-green-500 text-white rounded-md text-center hover:bg-green-600">
+          Add New Agent
+        </a>
+      </div>
+    @endif
+
     <div id="agents" class="container flex flex-wrap justify-center gap-8 mx-auto my-8">
       <!-- Aquí se mostrarán los agentes -->
       @foreach($agents as $agent)
-        <div class="w-64 p-4 text-white bg-gray-800 rounded-lg agent-card">
-          <a href="{{ route('agents.show', $agent->id) }}" class="block">
+        <div class="w-56 p-4 text-white bg-gray-800 rounded-lg agent-card flex flex-col items-center">
+          <a href="{{ route('agents.show', $agent->id) }}" class="block w-full">
             <img src="{{ asset('Fotos/' . $agent->photo) }}" alt="{{ $agent->name }}" class="agent-img mb-4 rounded-lg">
             <h3 class="mb-2 text-xl">{{ $agent->name }}</h3>
           </a>
+
+          <!-- Botón de Like -->
+          @if(auth()->user())
+            <form action="{{ route('agents.like', $agent->id) }}" method="POST" class="inline">
+              @csrf
+              <button type="submit" class="heart {{ \App\Models\UserLikes::hasUserLikedAgent(auth()->id(), $agent->id) ? 'liked' : '' }}">
+                <i class="fa fa-heart"></i>
+              </button>
+            </form>
+          @endif
 
           <!-- Botones Editar y Eliminar solo si el usuario es admin -->
           @if(auth()->user() && auth()->user()->role == 'admin')

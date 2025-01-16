@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\UserLikes;
 
 class User extends Model implements Authenticatable
 {
@@ -22,6 +23,13 @@ class User extends Model implements Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    // En el modelo User (User.php)
+    public function likedAgents()
+    {
+        return $this->hasMany(UserLikes::class, 'user_id');  // Ajusta 'user_id' según tu clave foránea
+    }
+
 
     public function getAuthPassword()
     {

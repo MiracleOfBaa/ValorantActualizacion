@@ -17,7 +17,7 @@
         <a href="{{ url('/news') }}" class="mx-4 text-white">News</a>
 
 
-        @if (auth()->check())
+        @if (auth()->id() !== null)
             <!-- Mostrar estas opciones si estás logueado -->
             <a href="{{ url('/profile') }}" class="mx-4 text-white">Profile</a>
             <a href="{{ route('logout') }}" class="mx-4 text-white"

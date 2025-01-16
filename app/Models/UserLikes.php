@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserLike extends Model
+class UserLikes extends Model
 {
     protected $table = 'user_likes';  // Nombre de la tabla
 
@@ -14,20 +14,16 @@ class UserLike extends Model
         'created_at',
     ];
 
-    /**
-     * Relación con el modelo User (usuario).
-     */
+    // Relación inversa con User
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id');  // Ajusta 'user_id' según tu clave foránea
     }
 
-    /**
-     * Relación con el modelo Agent (agente).
-     */
+    // Relación inversa con Agent
     public function agent()
     {
-        return $this->belongsTo(Agents::class, 'agent_id', 'id');
+        return $this->belongsTo(Agents::class, 'agent_id');  // Ajusta 'agent_id' según tu clave foránea
     }
 
     /**
@@ -78,4 +74,5 @@ class UserLike extends Model
             'agent_id' => $agentId,
         ]);
     }
+
 }

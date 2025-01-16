@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\AgentAbilities;
+use App\Models\UserLikes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -38,6 +39,12 @@ class Agents extends Model
     public function abilities()
     {
         return $this->hasMany(AgentAbilities::class, 'agent_id', 'id');
+    }
+
+    // En el modelo Agent (Agent.php)
+    public function likes()
+    {
+        return $this->hasMany(UserLikes::class, 'agent_id');  // Ajusta 'agent_id' según tu clave foránea
     }
 
     public function comments()
