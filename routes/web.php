@@ -29,9 +29,8 @@ Route::get('/agents', function () {
     return view('agents');
 });
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+Route::get('agents/{id}', [AgentController::class, 'show'])->name('agents.show');
+Route::get('agents/{id}/edit', [AgentController::class, 'edit'])->name('agents.edit');
 
 Route::get('/info', function () {
     return view('info');
@@ -69,3 +68,10 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 use App\Http\Controllers\AgentController;
 
 Route::get('/agents_test', [AgentController::class, 'index']);
+
+// routes/web.php
+
+use App\Http\Controllers\ContactController;
+
+Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');

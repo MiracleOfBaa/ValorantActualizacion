@@ -13,10 +13,10 @@
 
   <body class="font-sans relative bg-black">
     @include('partials.navbar')
+
     <!-- Contenido de la página -->
-    <div
-      class="flex flex-col md:flex-row justify-between items-start pt-10 md:p-10 space-y-8 md:space-y-0 md:space-x-8"
-    >
+    <div class="flex flex-col md:flex-row justify-between items-start pt-10 md:p-10 space-y-8 md:space-y-0 md:space-x-8">
+
       <!-- Columna izquierda -->
       <div class="w-full md:w-1/5">
         <img
@@ -31,9 +31,30 @@
         <h2 class="text-5xl text-white mb-8 text-center md:text-left">
           CONTÁCTANOS
         </h2>
+
+        <!-- Mensaje de éxito (mostrado encima del formulario) -->
+        <div class="w-full">
+          @if(session('success'))
+            <div class="bg-green-500 text-white p-4 rounded-md mb-4 w-full">
+              {{ session('success') }}
+            </div>
+          @endif
+
+          <!-- Mensajes de error (validación) -->
+          @if ($errors->any())
+            <div class="bg-red-500 text-white p-4 rounded-md mb-4 w-full">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
+        </div>
+
         <!-- Formulario en una tarjeta -->
         <div class="pt-8 rounded shadow-lg mb-10 md:mb-8 flex flex-col">
-          <!-- Asegúrate de que el formulario apunte a la ruta correcta -->
+          <!-- Formulario -->
           <form action="{{ route('contact.store') }}" method="POST">
             @csrf
             <input
@@ -62,10 +83,8 @@
           </form>
         </div>
 
-        <!-- Tres Imágenes en tarjetas cuadradas (debajo del formulario y ordenadas horizontalmente) -->
-        <div
-          class="flex flex-col md:flex-row w-full space-y-5 md:space-x-5 pt-6"
-        >
+        <!-- Tres Imágenes en tarjetas cuadradas -->
+        <div class="flex flex-col md:flex-row w-full space-y-5 md:space-x-5 pt-6">
           <img
             src="{{ asset('Fotos/fotosContacto/tarjeta3.jpeg') }}"
             alt="Imagen 2"

@@ -1,3 +1,8 @@
+<?php
+use App\Models\Agents;
+$agents = Agents::getAgents();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,9 +34,9 @@
       }
     </style>
   </head>
-  <body class="font-sans relative bg-black bg-cover Fotos">
+  <body class="relative font-sans bg-black bg-cover Fotos">
     @include('partials.navbar')
-    <div id="filters" class="flex justify-center items-center space-x-4 mb-6 mt-6">
+    <div id="filters" class="flex items-center justify-center mt-6 mb-6 space-x-4">
       <!-- Search bar -->
       <input
         type="text"
@@ -54,14 +59,14 @@
       </select>
     </div>
 
-    <div id="agents" class="container mx-auto my-8 flex flex-wrap justify-center gap-8">
+    <div id="agents" class="container flex flex-wrap justify-center gap-8 mx-auto my-8">
       <!-- Aquí se mostrarán los agentes -->
       @foreach($agents as $agent)
-        <div class="agent-card bg-gray-800 text-white rounded-lg p-4 w-64">
-          <img src="{{ asset('storage/' . $agent->photo) }}" alt="{{ $agent->name }}" class="w-full h-32 object-cover rounded-lg mb-4">
-          <h3 class="text-xl mb-2">{{ $agent->name }}</h3>
+        <div class="w-64 p-4 text-white bg-gray-800 rounded-lg agent-card">
+          <img src="{{ asset('storage/' . $agent->photo) }}" alt="{{ $agent->name }}" class="object-cover w-full h-32 mb-4 rounded-lg">
+          <h3 class="mb-2 text-xl">{{ $agent->name }}</h3>
           <p class="text-sm">{{ Str::limit($agent->description, 100) }}</p>
-          <div class="mt-4 flex justify-between items-center">
+          <div class="flex items-center justify-between mt-4">
             <a href="{{ route('agents.show', $agent->id) }}" class="text-blue-500 hover:underline">View Details</a>
             <a href="{{ route('agents.edit', $agent->id) }}" class="text-yellow-500 hover:underline">Edit</a>
           </div>
