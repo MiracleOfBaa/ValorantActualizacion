@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -19,7 +20,7 @@ class RegisterController extends Controller
     {
         // Validación de los datos del formulario
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|min:5|unique:user,username',
+            'username' => 'required|string|min:5|unique:users,username',
             'password' => 'required|string|min:8|confirmed', // Confirmación de contraseña
         ]);
 

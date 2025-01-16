@@ -123,7 +123,7 @@
             </div>
 
             <!-- Sección de comentarios (solo si el usuario está logueado) -->
-            @auth
+            @if (auth()->id() !== null)
                 <div class="mt-16 mb-8">
                     <h2 class="text-3xl font-semibold text-white">Comentarios</h2>
                     <!-- Formulario para agregar un nuevo comentario -->
@@ -139,21 +139,26 @@
                     <div class="mt-8 space-y-6">
                         @foreach ($agent->comments as $comment)
                             <div class="comment">
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-center justify-between">
                                     <div>
-                                        <span class="comment-header">@{{ $comment->user->name }}</span>
+                                        <span class="comment-header">{{ $comment->user->username }}</span>
                                     </div>
                                     <div class="flex items-center gap-4">
                                         <!-- Corazón de like -->
                                         <form action="{{ route('comments.like', $comment->id) }}" method="POST" class="like-form">
                                             @csrf
-                                            <button type="submit" class="like-button text-gray-300 hover:text-yellow-300">
-                                                <i class="fas fa-heart"></i>
+                                            <button type="submit" class="text-gray-300 like-button hover:text-yellow-300">
+                                                @if($agent->isLikedByUser(auth()->id()))
+                                                    <i class="text-red-500 fas fa-heart"></i> <!-- Mostrar el ícono de corazón si está "liked" -->
+                                                @else
+                                                    <i class="text-white far fa-heart"></i> <!-- Mostrar el ícono de corazón vacío si no está "liked" -->
+                                                @endif
+
                                             </button>
                                         </form>
                                     </div>
                                 </div>
-                                <p class="comment-body mt-2">{{ $comment->content }}</p>
+                                <p class="mt-2 comment-body">{{ $comment->content }}</p>
 
                                 <!-- Botón para responder -->
                                 <div class="flex justify-end mt-2">
@@ -188,10 +193,10 @@
                     </div>
                 </div>
             @else
-                <div class="mt-6 p-4 bg-gray-800 text-center rounded-md">
+                <div class="p-4 mt-6 text-center bg-gray-800 rounded-md">
                     <p class="text-white">Para comentar, por favor <a href="{{ route('login') }}" class="text-yellow-300 hover:underline">inicia sesión</a>.</p>
                 </div>
-            @endauth
+            @endif
         </div>
     </div>
 

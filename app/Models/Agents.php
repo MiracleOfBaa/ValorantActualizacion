@@ -41,6 +41,13 @@ class Agents extends Model
         return $this->hasMany(AgentAbilities::class, 'agent_id', 'id');
     }
 
+    // Agent.php
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'user_agent', 'agent_id', 'user_id');
+    }
+
+
     // En el modelo Agent (Agent.php)
     public function likes()
     {
@@ -51,6 +58,13 @@ class Agents extends Model
     {
         return $this->hasMany(Comment::class, 'agent_id', 'id');
     }
+
+    // Agent.php
+    public function isLikedByUser($id)
+    {
+        return $this->likes()->where('user_id', $id)->exists();
+    }
+
 
     public static function getTypeAgents($type)
     {

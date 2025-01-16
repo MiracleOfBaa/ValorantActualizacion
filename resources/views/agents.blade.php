@@ -51,10 +51,17 @@
         cursor: pointer;
         font-size: 24px;
         transition: color 0.2s ease;
+        margin-left: 10px;
       }
 
       .liked {
         color: #ff4d4d;
+      }
+
+      .agent-name-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
     </style>
   </head>
@@ -88,7 +95,7 @@
     <!-- Botón Añadir Agente (solo visible para admin) -->
     @if(auth()->user() && auth()->user()->role == 'admin')
       <div class="flex justify-center mb-6">
-        <a href="{{ route('agents.create') }}" class="px-4 py-2 bg-green-500 text-white rounded-md text-center hover:bg-green-600">
+        <a href="{{ route('agents.create') }}" class="px-4 py-2 text-center text-white bg-green-500 rounded-md hover:bg-green-600">
           Add New Agent
         </a>
       </div>
@@ -97,33 +104,39 @@
     <div id="agents" class="container flex flex-wrap justify-center gap-8 mx-auto my-8">
       <!-- Aquí se mostrarán los agentes -->
       @foreach($agents as $agent)
-        <div class="w-56 p-4 text-white bg-gray-800 rounded-lg agent-card flex flex-col items-center">
+        <div class="flex flex-col items-center w-56 p-4 text-white bg-gray-800 rounded-lg agent-card">
           <a href="{{ route('agents.show', $agent->id) }}" class="block w-full">
-            <img src="{{ asset('Fotos/' . $agent->photo) }}" alt="{{ $agent->name }}" class="agent-img mb-4 rounded-lg">
-            <h3 class="mb-2 text-xl">{{ $agent->name }}</h3>
-          </a>
+            <img src="{{ asset('Fotos/' . $agent->photo) }}" alt="{{ $agent->name }}" class="mb-4 rounded-lg agent-img">
+            <div class="agent-name-container">
+              <h3 class="mb-2 text-xl">{{ $agent->name }}</h3>
 
-          <!-- Botón de Like -->
-          @if(auth()->user())
-            <form action="{{ route('agents.like', $agent->id) }}" method="POST" class="inline">
-              @csrf
-              <button type="submit" class="heart {{ \App\Models\UserLikes::hasUserLikedAgent(auth()->id(), $agent->id) ? 'liked' : '' }}">
-                <i class="fa fa-heart"></i>
-              </button>
-            </form>
-          @endif
+              <!-- Corazón (like) al lado del nombre -->
+              @if(auth()->id() !== null)
+                <form action="{{ route('agents.like', $agent->id) }}" method="POST" class="inline">
+                  @csrf
+                  <button type="submit" class="heart {{ \App\Models\UserLikes::hasUserLikedAgent(auth()->id(), $agent->id) ? 'liked' : '' }}">
+                        @if($agent->isLikedByUser(auth()->id()))
+                            <i class="text-red-500 fas fa-heart"></i> <!-- Mostrar el ícono de corazón si está "liked" -->
+                        @else
+                            <i class="text-white far fa-heart"></i> <!-- Mostrar el ícono de corazón vacío si no está "liked" -->
+                        @endif
+                  </button>
+                </form>
+              @endif
+            </div>
+          </a>
 
           <!-- Botones Editar y Eliminar solo si el usuario es admin -->
           @if(auth()->user() && auth()->user()->role == 'admin')
-            <div class="mt-4 flex justify-between gap-4">
+            <div class="flex justify-between gap-4 mt-4">
               <!-- Botón de Editar -->
-              <a href="{{ route('agents.edit', $agent->id) }}" class="px-4 py-2 bg-yellow-500 text-white rounded-md text-center hover:bg-yellow-600">Edit</a>
+              <a href="{{ route('agents.edit', $agent->id) }}" class="px-4 py-2 text-center text-white bg-yellow-500 rounded-md hover:bg-yellow-600">Edit</a>
 
               <!-- Botón de Eliminar -->
               <form action="{{ route('agents.destroy', $agent->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this agent?')" class="inline">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md text-center hover:bg-red-600">Delete</button>
+                <button type="submit" class="px-4 py-2 text-center text-white bg-red-500 rounded-md hover:bg-red-600">Delete</button>
               </form>
             </div>
           @endif

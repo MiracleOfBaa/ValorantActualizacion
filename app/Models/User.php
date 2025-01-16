@@ -65,4 +65,24 @@ class User extends Model implements Authenticatable
     {
         return 'password';  // Nombre del campo de la tabla para el token de la sesión
     }
+
+    public static function getUserId($id)
+    {
+        return User::find($id);
+    }
+
+    // User.php
+    public function likes()
+    {
+        return $this->belongsToMany(Agents::class, 'user_likes', 'user_id', 'agent_id');
+    }
+
+    public static function isLiked($agentId)
+    {
+        $user = $this;
+        if($user == null) {
+            $user = User::find(auth()->id());
+        }
+        return $user->likes()->where('agent_id', $agentId)->exists();
+    }
 }

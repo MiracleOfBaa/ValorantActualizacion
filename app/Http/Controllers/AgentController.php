@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agents;
 use App\Models\Comment;
 use App\Models\CommentLike;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -48,13 +49,11 @@ class AgentController extends Controller
 
     public function like($id)
     {
-        $user = auth()->user();
-        $agent = Agents::findOrFail($id);
+        $user = User::find(auth()->id()); // Obtener el usuario autenticado
+        $agent = Agents::findOrFail($id);  // Obtener el agente por su ID
 
         // Verificar si el usuario ya ha dado like
-        $existingLike = $user->likes()->where('agent_id', $agent->id)->first();
-
-        if ($existingLike) {
+        if ($user->likes()->where('agent_id', $agent->id)->exists()) {
             // Si ya le dio like, quitar el like
             $user->likes()->detach($agent->id);
         } else {
@@ -65,6 +64,8 @@ class AgentController extends Controller
         // Redirigir de vuelta a la página anterior
         return back();
     }
+
+
 
 
     public function show($id)

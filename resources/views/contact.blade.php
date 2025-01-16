@@ -76,7 +76,7 @@
             ></textarea>
             <button
               type="submit"
-              class="w-full p-3 m-auto mt-5 font-bold text-white transition bg-blue-500 rounded-md  hover:bg-blue-300"
+              class="w-full p-3 m-auto mt-5 font-bold text-white transition bg-blue-500 rounded-md hover:bg-blue-300"
             >
               Enviar
             </button>

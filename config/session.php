@@ -86,7 +86,8 @@ return [
     |
     */
 
-    'table' => env('SESSION_TABLE', 'sessions'),
+    'table' => env('SESSION_TABLE', 'sessions'), // 'sessions' es el nombre predeterminado
+
 
     /*
     |--------------------------------------------------------------------------

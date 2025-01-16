@@ -11,13 +11,14 @@ class ProfileController extends Controller
     // Método para mostrar el formulario de edición
     public function edit()
     {
-        return view('profile.edit');
+        $user = User::getUserId(auth()->id()); // Obtiene el usuario autenticado
+        return view('profile', compact('user')); // Pasa el usuario a la vista
     }
 
     // Método para actualizar el perfil
     public function update(Request $request)
     {
-        $user = Auth::user(); // Obtiene el usuario autenticado
+        $user = User::getUserId(auth()->id()); // Obtiene el usuario autenticado
 
         // Validación de los campos
         $validated = $request->validate([

@@ -22,6 +22,10 @@ Route::get('/info', function () {
     return view('info');
 });
 
+Route::get('/news', function () {
+    return view('news');
+});
+
 Route::get('agents', [AgentController::class, 'index'])->name('agents.index');
 Route::get('agents/{id}', [AgentController::class, 'show'])->name('agents.show');
 Route::get('agents/{id}/edit', [AgentController::class, 'edit'])->name('agents.edit');
@@ -38,9 +42,10 @@ Route::middleware(['web'])->group(function () {
     // Route::get('/profile', function () {
     //     return view('profile');
     // });
-    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');  // Ruta GET para mostrar el perfil
+Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update'); // Ruta POST para actualizar
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Rutas de autenticación
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
