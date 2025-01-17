@@ -66,3 +66,16 @@ Route::post('/comments/{comment}/reply', [CommentController::class, 'reply'])->n
 
 // Ruta para dar/quitado like
 Route::post('/agents/{id}/like', [AgentController::class, 'like'])->name('agents.like');
+
+// Ruta para guardar el agente creado
+Route::post('/agents', [AgentController::class, 'store'])->name('agents.store');
+
+// Ruta para mostrar el formulario de edición de un agente
+Route::get('/agents/{agent}/edit', [AgentController::class, 'edit'])->name('agents.edit');
+
+// Ruta para actualizar los datos del agente
+Route::put('/agents/{agent}', [AgentController::class, 'update'])->name('agents.update');
+Route::get('/agents.create', [AgentController::class, 'create'])->name('agents.create');
+
+// Ruta para eliminar un agente
+Route::delete('/agents/{agent}', [AgentController::class, 'destroy'])->name('agents.destroy');

@@ -63,6 +63,10 @@
         justify-content: space-between;
         align-items: center;
       }
+
+      .form-container {
+        display: none;
+      }
     </style>
   </head>
   <body class="relative font-sans bg-black bg-cover Fotos">
@@ -94,11 +98,29 @@
 
     <!-- Botón Añadir Agente (solo visible para admin) -->
     @if(auth()->user() && auth()->user()->role == 'admin')
-      <div class="flex justify-center mb-6">
-        <a href="{{ route('agents.create') }}" class="px-4 py-2 text-center text-white bg-green-500 rounded-md hover:bg-green-600">
-          Add New Agent
-        </a>
-      </div>
+  <div class="flex justify-center mb-6">
+    <!-- Cambiamos este botón para que redirija directamente a 'create' -->
+    <a href="{{ route('agents.create')}}" class="px-4 py-2 text-center text-white bg-green-500 rounded-md hover:bg-green-600">
+      Add New Agent
+    </a>
+  </div>
+
+      <!-- Formulario de creación (inicialmente oculto) -->
+      <form id="create-agent-form" action="{{ route('agents.store') }}" method="POST" enctype="multipart/form-data" class="hidden max-w-lg p-6 mx-auto mt-6 bg-gray-800 rounded-lg shadow-lg">
+        @csrf
+
+        <div class="mb-4">
+          <label for="name" class="block text-gray-300">Nombre del Agente</label>
+          <input type="text" name="name" id="name" class="w-full px-4 py-2 text-gray-300 border border-gray-600 rounded-md" required>
+        </div>
+
+        <div class="mb-4">
+          <label for="photo" class="block text-gray-300">Foto del Agente</label>
+          <input type="file" name="photo" id="photo" class="w-full px-4 py-2 text-gray-300 border border-gray-600 rounded-md" required>
+        </div>
+
+        <button type="submit" class="w-full py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">Crear Agente</button>
+      </form>
     @endif
 
     <div id="agents" class="container flex flex-wrap justify-center gap-8 mx-auto my-8">
@@ -127,7 +149,7 @@
           </a>
 
           <!-- Botones Editar y Eliminar solo si el usuario es admin -->
-            @if(auth()->check() && auth()->user()->role == 'admin')
+          @if(auth()->check() && auth()->user()->role == 'admin')
             <div class="flex justify-between gap-4 mt-4">
               <!-- Botón de Editar -->
               <a href="{{ route('agents.edit', $agent->id) }}" class="px-4 py-2 text-center text-white bg-yellow-500 rounded-md hover:bg-yellow-600">
@@ -150,5 +172,12 @@
 
     <script src="{{ asset('src/utils.js') }}"></script>
     <script src="{{ asset('src/pages/AgentsPage.js') }}"></script>
+    <script>
+      // Script para mostrar u ocultar el formulario de creación
+      document.getElementById('add-agent-btn').addEventListener('click', function() {
+        const form = document.getElementById('create-agent-form');
+        form.classList.toggle('hidden'); // Mostrar u ocultar el formulario
+      });
+    </script>
   </body>
 </html>

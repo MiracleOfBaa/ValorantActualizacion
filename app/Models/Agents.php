@@ -83,4 +83,5 @@ class Agents extends Model
         $agents = self::with('abilities')->get();
         return $agents;
     }
+
 }
