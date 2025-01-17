@@ -41,7 +41,7 @@
                         type="text"
                         id="username"
                         name="username"
-                        value="{{ $user->username }}" <!-- Mostrar el nombre de usuario actual -->
+                        value="{{ $user->username }}"
                         class="w-full px-4 py-2 text-gray-300 bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500"
                         placeholder="Ingresa tu nombre de usuario"
                         required
