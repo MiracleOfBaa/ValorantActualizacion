@@ -14,10 +14,10 @@
     />
     <link rel="icon" href="{{ asset('Fotos/descarga.jpeg') }}" type="image/x-icon">
 </head>
-<body class="font-sans relative bg-black bg-cover Fotos">
+<body class="relative font-sans bg-black bg-cover Fotos">
     @include('partials.navbar')
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl text-center mb-6 text-gray-200">Create Agent</h1>
+    <div class="container px-4 py-8 mx-auto">
+        <h1 class="mb-6 text-3xl text-center text-gray-200">Create Agent</h1>
         <form id="createForm" class="max-w-lg mx-auto" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" id="agentId" name="agentId" value="{{ old('agentId') }}" />
@@ -26,7 +26,7 @@
                 <select
                     id="type"
                     name="type"
-                    class="w-full p-2 border border-white rounded bg-black text-white"
+                    class="w-full p-2 text-white bg-black border border-white rounded"
                 >
                     <option value="centinela" {{ old('type') == 'centinela' ? 'selected' : '' }}>Centinela</option>
                     <option value="controlador" {{ old('type') == 'controlador' ? 'selected' : '' }}>Controlador</option>
@@ -40,7 +40,7 @@
                     type="text"
                     id="name"
                     name="name"
-                    class="w-full p-2 border border-white rounded bg-black text-white"
+                    class="w-full p-2 text-white bg-black border border-white rounded"
                     value="{{ old('name') }}"
                 />
             </div>
@@ -49,7 +49,7 @@
                 <textarea
                     id="description"
                     name="description"
-                    class="w-full p-2 border border-white rounded bg-black text-white"
+                    class="w-full p-2 text-white bg-black border border-white rounded"
                 >{{ old('description') }}</textarea>
             </div>
             <div class="mb-4">
@@ -59,7 +59,7 @@
                     id="photo"
                     name="photo"
                     accept="image/*"
-                    class="w-full bg-black text-white"
+                    class="w-full text-white bg-black"
                 />
             </div>
             <div class="mb-4">
@@ -69,20 +69,20 @@
                     id="wallpaper"
                     name="wallpaper"
                     accept="image/*"
-                    class="w-full bg-black text-white"
+                    class="w-full text-white bg-black"
                 />
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2">
                 @foreach (['q', 'e', 'c', 'x'] as $section)
                     <div class="section">
-                        <h2 class="text-xl mb-2 text-gray-200">{{ strtoupper($section) }} Section</h2>
+                        <h2 class="mb-2 text-xl text-gray-200">{{ strtoupper($section) }} Section</h2>
                         <div class="mb-2">
                             <label for="{{ $section }}_header" class="block mb-1 text-gray-200">{{ strtoupper($section) }} Header</label>
                             <input
                                 type="text"
                                 id="{{ $section }}_header"
                                 name="{{ $section }}_header"
-                                class="w-full p-2 border border-white rounded bg-black text-white"
+                                class="w-full p-2 text-white bg-black border border-white rounded"
                                 value="{{ old("{$section}_header") }}"
                             />
                         </div>
@@ -91,7 +91,7 @@
                             <textarea
                                 id="{{ $section }}_body"
                                 name="{{ $section }}_body"
-                                class="w-full p-2 border border-white rounded bg-black text-white"
+                                class="w-full p-2 text-white bg-black border border-white rounded"
                             >{{ old("{$section}_body") }}</textarea>
                         </div>
                         <div>
@@ -101,7 +101,7 @@
                                 id="{{ $section }}_video"
                                 name="{{ $section }}_video"
                                 accept="video/*"
-                                class="w-full bg-black text-white"
+                                class="w-full text-white bg-black"
                             />
                         </div>
                     </div>
@@ -109,9 +109,9 @@
             </div>
             <button
                 type="submit"
-                class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+                class="w-full py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
             >
-                <i class="fa fa-plus mr-1"></i>
+                <i class="mr-1 fa fa-plus"></i>
                 Update Agent
             </button>
         </form>

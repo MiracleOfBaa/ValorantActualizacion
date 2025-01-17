@@ -111,7 +111,7 @@
               <h3 class="mb-2 text-xl">{{ $agent->name }}</h3>
 
               <!-- Corazón (like) al lado del nombre -->
-              @if(auth()->id() !== null)
+              @if(auth()->check())
                 <form action="{{ route('agents.like', $agent->id) }}" method="POST" class="inline">
                   @csrf
                   <button type="submit" class="heart {{ \App\Models\UserLikes::hasUserLikedAgent(auth()->id(), $agent->id) ? 'liked' : '' }}">
@@ -127,16 +127,20 @@
           </a>
 
           <!-- Botones Editar y Eliminar solo si el usuario es admin -->
-          @if(auth()->user() && auth()->user()->role == 'admin')
+            @if(auth()->check() && auth()->user()->role == 'admin')
             <div class="flex justify-between gap-4 mt-4">
               <!-- Botón de Editar -->
-              <a href="{{ route('agents.edit', $agent->id) }}" class="px-4 py-2 text-center text-white bg-yellow-500 rounded-md hover:bg-yellow-600">Edit</a>
+              <a href="{{ route('agents.edit', $agent->id) }}" class="px-4 py-2 text-center text-white bg-yellow-500 rounded-md hover:bg-yellow-600">
+                Editar
+              </a>
 
               <!-- Botón de Eliminar -->
-              <form action="{{ route('agents.destroy', $agent->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this agent?')" class="inline">
+              <form action="{{ route('agents.destroy', $agent->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este agente?')" class="inline">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="px-4 py-2 text-center text-white bg-red-500 rounded-md hover:bg-red-600">Delete</button>
+                <button type="submit" class="px-4 py-2 text-center text-white bg-red-500 rounded-md hover:bg-red-600">
+                  Eliminar
+                </button>
               </form>
             </div>
           @endif

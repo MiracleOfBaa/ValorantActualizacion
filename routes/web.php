@@ -39,9 +39,11 @@ Route::get('/agentform', function () {
 
 // Rutas protegidas
 Route::middleware(['web'])->group(function () {
-    // Route::get('/profile', function () {
-    //     return view('profile');
-    // });
+    Route::get('/profile', function () {
+        return view('profile');
+    });
+
+
 });
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');  // Ruta GET para mostrar el perfil
 Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update'); // Ruta POST para actualizar

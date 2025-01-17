@@ -41,13 +41,13 @@
     </div>
     </div>
     <div class="mt-16 mb-8">
-    <h2 class="text-3xl font-semibold text-white text-center">Comentarios</h2>
+    <h2 class="text-3xl font-semibold text-center text-white">Comentarios</h2>
 
     @if (auth()->id() !== null)
     <div class="mt-6">
-    <form action="{{ route('comments.store', $agent->id) }}" method="POST" class="flex flex-col gap-4 max-w-3xl mx-auto">
+    <form action="{{ route('comments.store', $agent->id) }}" method="POST" class="flex flex-col max-w-3xl gap-4 mx-auto">
         @csrf
-        <textarea name="comment" rows="4" placeholder="Escribe tu comentario..." class="px-4 py-2 text-white bg-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full resize-none"></textarea>
+        <textarea name="comment" rows="4" placeholder="Escribe tu comentario..." class="w-full px-4 py-2 text-white bg-gray-800 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
         <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">Enviar comentario</button>
     </form>
 </div>
@@ -56,8 +56,8 @@
 
     <div class="mt-8 space-y-6">
         @foreach ($agent->comments as $comment)
-            <div class="flex items-start gap-4 p-4 bg-gray-900 rounded-lg shadow-md max-w-4xl mx-auto">
-                <div class="w-12 h-12 flex items-center justify-center bg-gray-700 rounded-full">
+            <div class="flex items-start max-w-4xl gap-4 p-4 mx-auto bg-gray-900 rounded-lg shadow-md">
+                <div class="flex items-center justify-center w-12 h-12 bg-gray-700 rounded-full">
                     <span class="text-xl text-white">{{ strtoupper(substr($comment->user->username, 0, 1)) }}</span>
                 </div>
                 <div class="flex-1">
@@ -89,7 +89,7 @@
                     <div class="pl-6 mt-4 space-y-4 border-l-2 border-gray-700">
                         @foreach ($comment->replies as $reply)
                             <div class="flex items-start gap-3">
-                                <div class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full">
+                                <div class="flex items-center justify-center w-8 h-8 bg-gray-700 rounded-full">
                                     <span class="text-lg text-white">{{ strtoupper(substr($reply->user->username, 0, 1)) }}</span>
                                 </div>
                                 <div class="flex-1">
@@ -106,11 +106,11 @@
     </div>
 </div>
 
-@if (auth()->id() === null)
-    <div class="p-4 mt-6 text-center bg-gray-800 rounded-md">
-        <p class="text-white">Para responder a los comentarios, por favor <a href="{{ route('login') }}" class="text-yellow-300 hover:underline">inicia sesión</a>.</p>
-    </div>
-@endif
+    @if (!auth()->check())
+        <div class="p-4 mt-6 text-center bg-gray-800 rounded-md">
+            <p class="text-white">Para responder a los comentarios, por favor <a href="{{ route('login') }}" class="text-yellow-300 hover:underline">inicia sesión</a>.</p>
+        </div>
+    @endif
 
     <script>
         function toggleReplyForm(commentId) {
