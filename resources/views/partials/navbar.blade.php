@@ -21,9 +21,12 @@
             <!-- Mostrar estas opciones si estás logueado -->
             <a href="{{ url('/profile') }}" class="mx-4 text-white">Profile</a>
             <a href="{{ route('logout') }}" class="mx-4 text-white"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-               Logout
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Logout
             </a>
+            @if (auth()->user()->role == 'admin')
+                <a href="{{ url('admin/users') }}" class="mx-4 text-white">Gestionar</a>
+            @endif
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>

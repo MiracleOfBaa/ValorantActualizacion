@@ -100,9 +100,10 @@
     @if(auth()->user() && auth()->user()->role == 'admin')
   <div class="flex justify-center mb-6">
     <!-- Cambiamos este botón para que redirija directamente a 'create' -->
-    <a href="{{ route('agents.create')}}" class="px-4 py-2 text-center text-white bg-green-500 rounded-md hover:bg-green-600">
-      Add New Agent
-    </a>
+<a href="{{ route('agents.create') }}" class="px-4 py-2 text-center text-white bg-green-500 rounded-md hover:bg-green-600">
+  Add New Agent
+</a>
+
   </div>
 
       <!-- Formulario de creación (inicialmente oculto) -->

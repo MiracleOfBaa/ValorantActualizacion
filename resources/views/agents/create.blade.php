@@ -14,8 +14,8 @@
     />
     <link rel="icon" href="/Fotos/descarga.jpeg" type="image/x-icon" />
   </head>
-  @include('partials.navbar')
   <body class="relative font-sans bg-black bg-cover Fotos">
+  @include('partials.navbar')
     <div class="container px-4 py-8 mx-auto">
       <h1 class="mb-6 text-3xl text-center text-gray-200">Create Agent</h1>
       <form

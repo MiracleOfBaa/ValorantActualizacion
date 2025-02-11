@@ -22,7 +22,7 @@ class Agents extends Model
         'description',
     ];
 
-    // Aquí puedes agregar un método para generar UUIDs cuando se cree un nuevo modelo
+
     public static function boot()
     {
         parent::boot();

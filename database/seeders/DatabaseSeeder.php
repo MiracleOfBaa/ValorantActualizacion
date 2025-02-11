@@ -22,6 +22,14 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
+        for ($i=0; $i <10 ; $i++) {
+            User::create([
+                'username' => 'user'.$i,
+                'password' => Hash::make('user'.$i),
+                'role' => 'user',
+            ]);
+        }
+
         // Agents
         $json = File::get(database_path('data/agents.json'));
         $agents = json_decode($json, true);
