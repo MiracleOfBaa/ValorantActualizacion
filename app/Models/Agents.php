@@ -8,6 +8,38 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+/**
+ * 
+ *
+ * @property string $id
+ * @property string $type
+ * @property string $name
+ * @property string $photo
+ * @property string $wallpaper
+ * @property string $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, AgentAbilities> $abilities
+ * @property-read int|null $abilities_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $comments
+ * @property-read int|null $comments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $likedByUsers
+ * @property-read int|null $liked_by_users_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, UserLikes> $likes
+ * @property-read int|null $likes_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agents newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agents newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agents query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agents whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agents whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agents whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agents whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agents wherePhoto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agents whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agents whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agents whereWallpaper($value)
+ * @mixin \Eloquent
+ */
 class Agents extends Model
 {
     protected $keyType = 'string';

@@ -4,6 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * 
+ *
+ * @property int $user_id
+ * @property string $agent_id
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property-read \App\Models\Agents $agent
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserLikes newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserLikes newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserLikes query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserLikes whereAgentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserLikes whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserLikes whereUserId($value)
+ * @mixin \Eloquent
+ */
 class UserLikes extends Model
 {
     protected $table = 'user_likes';  // Nombre de la tabla

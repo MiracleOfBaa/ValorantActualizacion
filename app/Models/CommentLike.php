@@ -4,6 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * 
+ *
+ * @property int $user_id
+ * @property int $comment_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Comment $comment
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CommentLike newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CommentLike newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CommentLike query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CommentLike whereCommentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CommentLike whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CommentLike whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CommentLike whereUserId($value)
+ * @mixin \Eloquent
+ */
 class CommentLike extends Model
 {
     protected $fillable = [

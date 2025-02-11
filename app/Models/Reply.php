@@ -4,6 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $comment_id
+ * @property int $user_id
+ * @property string $content
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Comment $comment
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reply newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reply newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reply query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reply whereCommentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reply whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reply whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reply whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reply whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reply whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Reply extends Model
 {
     protected $fillable = [
